@@ -117,8 +117,16 @@ for (const [path, snippets] of Object.entries(requiredSnippets)) {
 }
 
 const config = read('scripts/portal-config.js');
-if (!config.includes('supabaseUrl: ""')) fail('portal-config.js should ship without a real Supabase URL');
-if (!config.includes('supabaseAnonKey: ""')) fail('portal-config.js should ship without a real anon key');
+if (!config.includes('https://') || !config.includes('.supabase.co')) {
+  fail('portal-config.js should include the Supabase project URL');
+}
+if (config.includes('/rest/v1')) fail('portal-config.js should use the project URL, not the REST API URL');
+if (!config.includes('sb_publishable_') && !config.includes('eyJ')) {
+  fail('portal-config.js should include a Supabase publishable or anon public key');
+}
+if (config.includes('service_role') || config.includes('sb_secret_')) {
+  fail('portal-config.js must not include secret or service-role keys');
+}
 
 if (failures) {
   console.error(`\n${failures} checks failed`);
