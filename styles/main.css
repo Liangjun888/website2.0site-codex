@@ -2,8 +2,8 @@
    依据 21_DESIGN_SPEC_V2.md 实现。所有颜色/字号/间距均来自规范 token，请勿擅自改值。 */
 
 :root {
-  --bg-page: #FBF8F3;
-  --bg-alt: #F3EEE4;
+  --bg-page: #FFFFFF;
+  --bg-alt: #F9F8F5;
   --bg-deep: #2B211C;
   --bg-deep-2: #201813;
 
