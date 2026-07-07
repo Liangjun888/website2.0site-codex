@@ -105,7 +105,7 @@ $$;
 
 drop trigger if exists monthly_reports_publish_guard on public.monthly_reports;
 create trigger monthly_reports_publish_guard
-before update of status on public.monthly_reports
+before insert or update of status on public.monthly_reports
 for each row
 when (new.status = 'published')
 execute function public.prevent_incomplete_monthly_report_publish();
@@ -133,7 +133,10 @@ drop policy if exists "monthly_reports_select_published_or_admin" on public.mont
 create policy "monthly_reports_select_published_or_admin"
 on public.monthly_reports for select
 to authenticated
-using (status = 'published' or public.current_user_role() = 'admin');
+using (
+  public.current_user_role() = 'admin'
+  or (status = 'published' and public.current_user_role() = 'client')
+);
 
 drop policy if exists "monthly_reports_admin_write" on public.monthly_reports;
 create policy "monthly_reports_admin_write"
@@ -148,11 +151,14 @@ on public.monthly_report_files for select
 to authenticated
 using (
   public.current_user_role() = 'admin'
-  or exists (
-    select 1
-    from public.monthly_reports
-    where monthly_reports.id = monthly_report_files.report_id
-      and monthly_reports.status = 'published'
+  or (
+    public.current_user_role() = 'client'
+    and exists (
+      select 1
+      from public.monthly_reports
+      where monthly_reports.id = monthly_report_files.report_id
+        and monthly_reports.status = 'published'
+    )
   )
 );
 
@@ -167,7 +173,10 @@ drop policy if exists "documents_select_published_or_admin" on public.documents;
 create policy "documents_select_published_or_admin"
 on public.documents for select
 to authenticated
-using (status = 'published' or public.current_user_role() = 'admin');
+using (
+  public.current_user_role() = 'admin'
+  or (status = 'published' and public.current_user_role() = 'client')
+);
 
 drop policy if exists "documents_admin_write" on public.documents;
 create policy "documents_admin_write"
@@ -196,16 +205,21 @@ using (
   bucket_id = 'client-documents'
   and (
     public.current_user_role() = 'admin'
-    or name in (
-      select monthly_report_files.storage_path
-      from public.monthly_report_files
-      join public.monthly_reports on monthly_reports.id = monthly_report_files.report_id
-      where monthly_reports.status = 'published'
-    )
-    or name in (
-      select documents.storage_path
-      from public.documents
-      where documents.status = 'published' and documents.storage_path is not null
+    or (
+      public.current_user_role() = 'client'
+      and (
+        name in (
+          select monthly_report_files.storage_path
+          from public.monthly_report_files
+          join public.monthly_reports on monthly_reports.id = monthly_report_files.report_id
+          where monthly_reports.status = 'published'
+        )
+        or name in (
+          select documents.storage_path
+          from public.documents
+          where documents.status = 'published' and documents.storage_path is not null
+        )
+      )
     )
   )
 );

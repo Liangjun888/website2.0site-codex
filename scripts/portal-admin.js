@@ -133,7 +133,10 @@
     var redirectTo = window.location.origin + window.location.pathname;
     var result = await supabaseClient.auth.signInWithOtp({
       email: email,
-      options: { emailRedirectTo: redirectTo },
+      options: {
+        shouldCreateUser: false,
+        emailRedirectTo: redirectTo,
+      },
     });
     if (result.error) throw result.error;
     setStatus("登录链接已发送，请查看邮箱。", "success");
