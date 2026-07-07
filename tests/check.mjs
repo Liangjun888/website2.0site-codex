@@ -58,12 +58,14 @@ const requiredSnippets = {
   ],
   'scripts/portal.js': [
     'signInWithOtp',
+    'shouldCreateUser: false',
     'createSignedUrl',
     'download_events',
     'monthly_reports',
   ],
   'scripts/portal-admin.js': [
     'signInWithOtp',
+    'shouldCreateUser: false',
     'monthly_report_files',
     'client-documents',
     'type !== "application/pdf"',
@@ -73,6 +75,7 @@ const requiredSnippets = {
     'client-documents',
     'monthly_reports_publish_guard',
     "role in ('client', 'admin')",
+    "public.current_user_role() = 'client'",
   ],
 };
 
