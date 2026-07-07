@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>客户专属区｜Gold Summit Capital</title>
-<meta name="description" content="客户专属区是一个逐步建设中的投资与传承内容中枢，仅向受邀客户开放。">
+<title>客户登录｜Gold Summit Capital</title>
+<meta name="description" content="Gold Summit Capital 客户资料库仅向受邀客户开放，用于查阅和下载已发布的客户资料。">
 <link rel="stylesheet" href="../../styles/main.css">
 </head>
 <body>
@@ -39,42 +39,84 @@
   <section class="page-hero">
     <div class="container reveal">
       <p class="eyebrow-en">Client Portal</p>
-      <h1>客户专属区</h1>
-      <p class="sub">一个逐步建设中的投资与传承内容中枢，仅向受邀客户开放。</p>
+      <h1>客户资料库</h1>
+      <p class="sub">仅向受邀客户开放，用于查阅 Gold Summit Capital 已发布的月报与共享资料。</p>
       <hr class="rule-bronze">
     </div>
   </section>
 
-  <section class="section section-v">
-    <span class="v-eyebrow" aria-hidden="true">专属区定位</span>
-    <div class="container reveal">
-      <h2 class="text-col">不只是资料存放，更是长期沟通的入口。</h2>
-      <div class="text-col" style="margin-top:32px;">
-        <p>客户专属区未来将用于承载 Gold Summit Capital 与客户家庭之间的持续内容交付，包括月报、内部研究、基金信息摘要、活动记录与传承内容。</p>
-        <p>我们希望它成为一个安静、清晰、可持续更新的空间，帮助客户回看重要信息，理解投资逻辑，并逐步沉淀关于财富、风险和责任的共同语言。</p>
-      </div>
-    </div>
-  </section>
+  <section class="section section-v portal-app" data-portal-app>
+    <span class="v-eyebrow" aria-hidden="true">客户访问</span>
+    <div class="container">
+      <div class="portal-status" data-portal-status hidden></div>
 
-  <section class="section alt section-v">
-    <span class="v-eyebrow" aria-hidden="true">未来内容</span>
-    <div class="container reveal">
-      <h2 class="text-col">未来将逐步开放的内容</h2>
-      <div class="stack-list wide-col" style="margin-left:0;">
-        <div class="item"><h3>月报</h3><p>记录市场环境、组合观察和团队观点。</p></div>
-        <div class="item"><h3>内部研究</h3><p>围绕宏观、行业、科技趋势和家族财富议题沉淀观点。</p></div>
-        <div class="item"><h3>基金信息摘要</h3><p>在合规边界内提供必要的基金相关信息。</p></div>
-        <div class="item"><h3>活动记录</h3><p>以文字和非客户识别素材记录活动主题、核心洞察和讨论问题。</p></div>
-        <div class="item"><h3>传承与教育内容</h3><p>帮助下一代理解投资、风险、周期、责任和长期价值。</p></div>
+      <div class="portal-grid" data-config-view hidden>
+        <section class="portal-panel">
+          <p class="eyebrow-en">Configuration Required</p>
+          <h2>客户区后台尚未连接</h2>
+          <p>请先在 <code>scripts/portal-config.js</code> 中填写 Supabase 项目地址和 anon key，并在 Supabase 中执行本仓库提供的初始化 SQL。</p>
+          <p>完成后，本页面会显示邮箱登录入口和客户资料库。</p>
+        </section>
+        <aside class="portal-aside">
+          <h3>部署前检查</h3>
+          <ul class="portal-checklist">
+            <li>Supabase Auth 已启用邮箱登录</li>
+            <li>已创建私有 bucket：client-documents</li>
+            <li>已执行 RLS 权限脚本</li>
+            <li>已创建至少一个 client 用户</li>
+          </ul>
+        </aside>
+      </div>
+
+      <div class="portal-grid" data-auth-view hidden>
+        <section class="portal-panel">
+          <p class="eyebrow-en">By Invitation Only</p>
+          <h2>仅向受邀客户开放</h2>
+          <p>请输入已登记的邮箱。系统会发送一次性登录链接至您的邮箱，点击后即可进入客户资料库。</p>
+          <form class="portal-form" data-login-form>
+            <label for="clientEmail">邮箱地址</label>
+            <input id="clientEmail" name="email" type="email" autocomplete="email" required placeholder="name@example.com">
+            <button class="portal-button" type="submit">发送登录链接</button>
+          </form>
+          <p class="portal-note">如您尚未收到邀请或需要更新邮箱，请联系您的 Gold Summit Capital 团队联系人。</p>
+        </section>
+        <aside class="portal-aside">
+          <h3>资料范围</h3>
+          <p>V1 阶段先开放共享客户资料，包括月报、市场观察、公告和教育内容。个人净值报告不在本阶段开放。</p>
+          <p>每月月报发布后，将按同一月份提供三个版本：简体中文、繁體中文、English。</p>
+        </aside>
+      </div>
+
+      <div data-client-view hidden>
+        <div class="portal-toolbar">
+          <div>
+            <p class="eyebrow-en">Monthly Reports</p>
+            <h2>月报下载</h2>
+            <p data-user-email class="portal-note"></p>
+          </div>
+          <div class="portal-toolbar-actions">
+            <button class="portal-button portal-button--secondary" type="button" data-refresh-reports>刷新资料</button>
+            <button class="portal-button portal-button--ghost" type="button" data-sign-out>退出登录</button>
+          </div>
+        </div>
+
+        <div class="portal-filter" aria-label="资料筛选">
+          <span>当前仅显示已发布月报</span>
+          <a href="./admin/" data-admin-link hidden>进入后台管理</a>
+        </div>
+
+        <div class="report-list" data-report-list>
+          <div class="portal-loading">正在读取资料库...</div>
+        </div>
       </div>
     </div>
   </section>
 
   <section class="section deep">
     <div class="container reveal">
-      <p class="eyebrow-en">By Invitation Only</p>
-      <h2 class="text-col">仅向受邀客户开放</h2>
-      <p class="text-col">该区域目前处于建设阶段，暂不开放在线账号登录。现阶段，如需获取相关资料，请通过您的 Gold Summit Capital 联系人或团队获取访问安排。</p>
+      <p class="eyebrow-en">Important Notice</p>
+      <h2 class="text-col">资料仅供受邀客户查阅</h2>
+      <p class="text-col">客户资料库中的内容仅用于既有客户沟通和资料交付，不构成任何投资建议、基金销售、认购邀请或回报承诺。任何投资均涉及风险，完整信息请以正式法律文件和合规材料为准。</p>
     </div>
   </section>
 
@@ -104,6 +146,9 @@
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../../scripts/portal-config.js"></script>
 <script src="../../scripts/main.js"></script>
+<script src="../../scripts/portal.js"></script>
 </body>
 </html>

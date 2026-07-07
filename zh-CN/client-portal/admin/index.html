@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>资料后台｜Gold Summit Capital</title>
+<meta name="description" content="Gold Summit Capital 客户资料库后台，仅供管理员上传和发布客户资料。">
+<link rel="stylesheet" href="../../../styles/main.css">
+</head>
+<body>
+<a class="skip-link" href="#main">跳转到主要内容</a>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="wordmark" href="../../">Gold Summit Capital</a>
+    <nav class="main-nav" aria-label="主导航">
+      <ul>
+        <li><a href="../../">首页</a></li>
+        <li><a href="../../about/">关于我们</a></li>
+        <li><a href="../../approach/">投资与传承理念</a></li>
+        <li class="nav-sep" role="presentation" aria-hidden="true"></li>
+        <li class="nav-portal"><a href="../../client-portal/" aria-current="page"><span>客户登录</span></a></li>
+      </ul>
+    </nav>
+    <button class="menu-btn" aria-expanded="false" aria-controls="mobileNav">菜单</button>
+  </div>
+</header>
+<nav class="mobile-nav" id="mobileNav" aria-label="移动端导航">
+  <ul>
+    <li><a href="../../">首页</a></li>
+    <li><a href="../../about/">关于我们</a></li>
+    <li><a href="../../approach/">投资与传承理念</a></li>
+    <li class="portal"><a href="../../client-portal/">客户登录 ↗</a></li>
+  </ul>
+</nav>
+
+<main id="main">
+
+  <section class="page-hero">
+    <div class="container reveal">
+      <p class="eyebrow-en">Admin Console</p>
+      <h1>资料后台</h1>
+      <p class="sub">用于上传和发布客户资料库中的月报。仅管理员账号可访问。</p>
+      <hr class="rule-bronze">
+    </div>
+  </section>
+
+  <section class="section section-v portal-app" data-admin-app>
+    <span class="v-eyebrow" aria-hidden="true">后台管理</span>
+    <div class="container">
+      <div class="portal-status" data-admin-status hidden></div>
+
+      <div class="portal-grid" data-admin-config-view hidden>
+        <section class="portal-panel">
+          <p class="eyebrow-en">Configuration Required</p>
+          <h2>后台尚未连接</h2>
+          <p>请先完成 Supabase 配置。本后台依赖 <code>scripts/portal-config.js</code> 与 <code>supabase/schema.sql</code>。</p>
+        </section>
+        <aside class="portal-aside">
+          <h3>管理员准备</h3>
+          <p>管理员用户需要在 Supabase Auth 中创建，并在 <code>profiles</code> 表中设置为 <code>admin</code>。</p>
+        </aside>
+      </div>
+
+      <div class="portal-grid" data-admin-login-view hidden>
+        <section class="portal-panel">
+          <p class="eyebrow-en">Admin Login</p>
+          <h2>管理员登录</h2>
+          <p>请输入已登记的管理员邮箱。系统会发送一次性登录链接。</p>
+          <form class="portal-form" data-admin-login-form>
+            <label for="adminEmail">管理员邮箱</label>
+            <input id="adminEmail" name="email" type="email" autocomplete="email" required placeholder="admin@example.com">
+            <button class="portal-button" type="submit">发送登录链接</button>
+          </form>
+        </section>
+        <aside class="portal-aside">
+          <h3>安全提示</h3>
+          <p>后台不提供公开申请入口。请仅为 Gold Summit 内部授权人员创建管理员账号。</p>
+        </aside>
+      </div>
+
+      <div data-admin-console hidden>
+        <div class="portal-toolbar">
+          <div>
+            <p class="eyebrow-en">Monthly Report Upload</p>
+            <h2>上传月报</h2>
+            <p class="portal-note" data-admin-user-email></p>
+          </div>
+          <div class="portal-toolbar-actions">
+            <a class="portal-button portal-button--secondary" href="../">返回客户资料库</a>
+            <button class="portal-button portal-button--ghost" type="button" data-admin-sign-out>退出登录</button>
+          </div>
+        </div>
+
+        <form class="portal-form admin-form" data-report-form>
+          <div class="form-grid">
+            <div>
+              <label for="reportMonth">月报月份</label>
+              <input id="reportMonth" name="reportMonth" type="month" required>
+            </div>
+            <div>
+              <label for="reportTitle">月报标题</label>
+              <input id="reportTitle" name="title" type="text" required placeholder="例如：2026年6月月报">
+            </div>
+          </div>
+
+          <label for="reportSummary">摘要</label>
+          <textarea id="reportSummary" name="summary" rows="4" required placeholder="简要说明本月资料内容。"></textarea>
+
+          <div class="file-grid">
+            <div>
+              <label for="fileZhCn">简体中文 PDF</label>
+              <input id="fileZhCn" name="zh-CN" type="file" accept="application/pdf" required>
+            </div>
+            <div>
+              <label for="fileZhHk">繁體中文 PDF</label>
+              <input id="fileZhHk" name="zh-HK" type="file" accept="application/pdf" required>
+            </div>
+            <div>
+              <label for="fileEn">English PDF</label>
+              <input id="fileEn" name="en" type="file" accept="application/pdf" required>
+            </div>
+          </div>
+
+          <label class="portal-checkbox">
+            <input name="publishNow" type="checkbox" checked>
+            上传三种语言版本后立即发布
+          </label>
+
+          <button class="portal-button" type="submit">上传月报</button>
+          <p class="portal-note">发布前必须上传三种语言版本。PDF 会存放在私有文件库中，不会进入公开网页目录。</p>
+        </form>
+
+        <section class="admin-list-section">
+          <div class="portal-toolbar portal-toolbar--compact">
+            <div>
+              <p class="eyebrow-en">Current Reports</p>
+              <h2>已创建月报</h2>
+            </div>
+            <button class="portal-button portal-button--secondary" type="button" data-admin-refresh>刷新列表</button>
+          </div>
+          <div class="report-list" data-admin-report-list>
+            <div class="portal-loading">正在读取资料...</div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-main">
+    <div class="container">
+      <span class="wordmark">Gold Summit Capital</span>
+      <p class="footer-tagline">长期投资，真实参与，探索财富与智慧的双重传承。</p>
+      <nav class="footer-nav" aria-label="页脚导航">
+        <a href="../../">首页</a>
+        <a href="../../about/">关于我们</a>
+        <a href="../../approach/">投资与传承理念</a>
+        <a href="../../client-portal/">客户登录</a>
+      </nav>
+    </div>
+  </div>
+  <div class="footer-legal">
+    <div class="container">
+      <p>本后台仅供 Gold Summit Capital 授权人员使用。上传资料前请确认文件版本、语言、月份和合规边界。</p>
+      <p class="copyright">© 2026 Gold Summit Capital，保留所有权利。</p>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../../../scripts/portal-config.js"></script>
+<script src="../../../scripts/main.js"></script>
+<script src="../../../scripts/portal-admin.js"></script>
+</body>
+</html>
