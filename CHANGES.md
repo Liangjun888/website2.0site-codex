@@ -2,6 +2,13 @@
 
 构建日期：2026-07-07（Claude 于 claude.ai 对话内构建）
 
+## 2026-07-08：客户资料库 V1
+
+1. 新增客户资料库页面：`zh-CN/client-portal/index.html`。页面沿用现有公共页的页头、页脚、字体、颜色和留白体系，仅新增客户区所需的登录与月报下载组件。
+2. 新增管理员后台：`zh-CN/client-portal/admin/index.html`。后台用于上传每月三语 PDF，并在三种语言版本齐备后发布。
+3. 新增 Supabase 配置与初始化脚本：`scripts/portal-config.js`、`scripts/portal.js`、`scripts/portal-admin.js`、`supabase/schema.sql`。PDF 存放在私有 bucket，不放入公开网页目录。
+4. 更新合规契约检查：允许客户区真实邮箱登录表单，但仍禁止密码输入、公开注册、收益承诺、认购赎回等敏感内容。
+
 1. 字体（规范 5 节）：因构建环境无法下载字体文件，未打包 woff2 本地字体，
    采用系统字体回退栈（Noto Serif SC → Songti SC → SimSun 等）。
    待确认 20_OPEN_QUESTIONS B2 后，二选一：本地托管 woff2，或在 <head> 加入 Google Fonts 链接。
