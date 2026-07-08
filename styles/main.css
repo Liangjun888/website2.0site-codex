@@ -240,24 +240,70 @@ p.lead { font-size: var(--fs-body-lg); }
 .section.deep .eyebrow-en { color: var(--accent-bronze-soft); }
 
 /* ── 首页 Hero ────────────────────────────── */
-.hero-home { padding: 96px 0 0; }
+.hero-home {
+  position: relative;
+  overflow: hidden;
+  min-height: calc(100vh - 76px);
+  padding: 0;
+  display: flex;
+  align-items: center;
+  background:
+    linear-gradient(rgba(255, 255, 255, .44), rgba(255, 255, 255, .26)),
+    url("../assets/home-hero-family-mountain.png") center center / cover no-repeat;
+}
+.hero-home .container {
+  position: static;
+  width: 100%;
+  max-width: none;
+  padding-left: clamp(24px, 7vw, 96px);
+  padding-right: clamp(24px, 7vw, 96px);
+}
 .hero-grid {
-  display: grid;
-  grid-template-columns: 45% 1fr;
-  gap: 48px;
-  align-items: stretch;
-  min-height: 72vh;
+  position: static;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 76px);
+  width: 100%;
 }
-.hero-text { display: flex; flex-direction: column; justify-content: center; padding-bottom: 80px; }
-.hero-text h1 { margin-bottom: 28px; }
-.hero-sub { font-size: var(--fs-body-lg); max-width: 480px; }
-.hero-ctas { margin-top: 40px; display: flex; flex-direction: column; gap: 16px; align-items: flex-start; }
-.hero-panel {
-  background: var(--bg-alt);
-  border-left: 1px solid var(--accent-bronze);
-  min-height: 420px;
+.hero-text {
+  position: static;
+  width: min(960px, 84vw);
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0;
+  text-align: center;
 }
-/* 占位面板：正式摄影素材到位后替换为 <img>，规则见 21_DESIGN_SPEC_V2 第 9 节 */
+.hero-text h1 {
+  margin: 0 auto 18px;
+  font-size: clamp(34px, 3.85vw, 56px);
+  line-height: 1.16;
+  letter-spacing: 0;
+  text-shadow: 0 1px 18px rgba(255, 250, 238, .8);
+}
+.hero-sub {
+  width: min(900px, 88vw);
+  max-width: 900px;
+  margin: 0 auto;
+  font-size: clamp(13px, .92vw, 15px);
+  line-height: 1.85;
+  white-space: nowrap;
+  text-shadow: 0 1px 14px rgba(255, 250, 238, .84);
+}
+.hero-ctas {
+  position: absolute;
+  right: clamp(96px, 14vw, 210px);
+  bottom: clamp(58px, 10vh, 104px);
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  align-items: center;
+  justify-content: flex-end;
+  z-index: 3;
+}
+.hero-home .link-cta { text-shadow: 0 1px 14px rgba(255, 250, 238, .9); }
+.hero-panel { display: none; }
 
 /* ── 二级页 Hero（纯文字版） ─────────────────── */
 .page-hero { background: var(--bg-alt); padding: 110px 0 90px; }
@@ -640,10 +686,12 @@ p.lead { font-size: var(--fs-body-lg); }
 @media (max-width: 767px) {
   :root { --section-pad: 64px; }
   .container { padding: 0 20px; }
-  .hero-home { padding-top: 56px; }
-  .hero-grid { grid-template-columns: 1fr; min-height: 0; }
-  .hero-text { padding-bottom: 0; }
-  .hero-panel { min-height: 44vh; margin-bottom: 0; border-left: 0; border-top: 1px solid var(--accent-bronze); }
+  .hero-home { min-height: calc(100vh - 68px); background-position: 38% center; }
+  .hero-grid { min-height: calc(100vh - 68px); }
+  .hero-text { width: min(100%, 92vw); }
+  .hero-text h1 { font-size: 32px; }
+  .hero-sub { font-size: 14px; white-space: normal; }
+  .hero-ctas { right: 28px; bottom: 42px; gap: 16px; }
   .split { grid-template-columns: 1fr; gap: 40px; }
   .principles { grid-template-columns: 1fr; margin-top: 40px; }
   .principles > div { border-left: 0; border-top: 1px solid var(--rule-hairline); padding: 24px 0; }
